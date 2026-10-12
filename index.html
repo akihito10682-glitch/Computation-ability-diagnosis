@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>理科計算どうぶつタイプ診断</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=Zen+Maru+Gothic:wght@500;700&display=swap" rel="stylesheet">
+<style>
+:root{color-scheme:light;--ink:#111;--paper:#fff;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+*{box-sizing:border-box}
+body{margin:0;color:var(--ink);background:#fff radial-gradient(#d4d4d4 1.2px,transparent 1.5px) 0 0/10px 10px;min-height:100vh;font-family:'Zen Maru Gothic','Hiragino Maru Gothic ProN','Noto Sans JP',sans-serif;font-weight:500;line-height:1.7}
+.wrap{max-width:640px;margin:0 auto;padding:24px 16px 56px}
+.disp{font-family:'Dela Gothic One','Hiragino Sans','Noto Sans JP',sans-serif;font-weight:400;line-height:1.25;margin:0}
+.card{background:#fff;border:3px solid var(--ink);border-radius:16px;box-shadow:6px 6px 0 var(--ink);padding:22px}
+.btn{font:inherit;font-weight:700;display:block;width:100%;background:#fff;color:var(--ink);border:3px solid var(--ink);border-radius:12px;padding:12px 16px;box-shadow:4px 4px 0 var(--ink);cursor:pointer;text-align:left;transition:transform .08s,box-shadow .08s}
+.btn:hover{transform:translate(2px,2px);box-shadow:2px 2px 0 var(--ink);background:var(--ink);color:#fff}
+.btn:focus-visible{outline:3px dashed var(--ink);outline-offset:3px}
+.btn.main{background:var(--ink);color:#fff;text-align:center}
+.btn.main:hover{background:#fff;color:var(--ink)}
+.btn.sub{width:auto;display:inline-block;padding:8px 14px;font-size:14px;box-shadow:3px 3px 0 var(--ink)}
+.cast{display:flex;justify-content:center;gap:2px;margin:8px 0 18px}
+.cast svg{width:19%;max-width:92px;height:auto}
+h1.disp{font-size:clamp(28px,8vw,44px);margin-bottom:12px}
+.sub-t{margin:0 0 20px;font-size:15px}
+.prog{height:14px;border:3px solid var(--ink);border-radius:8px;background:#fff;overflow:hidden;margin-bottom:6px}
+.prog i{display:block;height:100%;background:var(--ink);transition:width .25s}
+.cnt{font-size:13px;margin-bottom:14px}
+.q{font-size:19px;font-weight:700;margin:0 0 6px;line-height:1.5}
+.tag{display:inline-block;font-size:13px;border:2px solid var(--ink);border-radius:20px;padding:0 10px;margin-bottom:10px;background:var(--ink);color:#fff}
+.opts{display:grid;gap:12px;margin:16px 0}
+.res-top{text-align:center}
+.pic{width:200px;margin:0 auto 10px;padding:8px 8px 0;border:3px solid var(--ink);border-radius:50%;background:#fff radial-gradient(#111 1.3px,transparent 1.6px) 0 0/9px 9px;aspect-ratio:1}
+.pic svg{width:100%;height:auto;display:block}
+.pic{background-color:#fff;position:relative}
+.pic::before{content:"";position:absolute;inset:0;border-radius:50%;background:#fff;opacity:.82}
+.pic svg{position:relative}
+.lead{font-size:14px;margin:0}
+h2.disp{font-size:clamp(24px,7vw,34px);margin:4px 0 10px}
+.desc{margin:0 0 12px;text-align:left}
+.adv{border:3px dashed var(--ink);border-radius:12px;padding:10px 14px;margin:14px 0;font-size:15px}
+.abil{display:grid;gap:10px;margin:14px 0}
+.row{display:grid;grid-template-columns:7.2em 1fr 2.2em;gap:8px;align-items:center;font-size:14px}
+.blk{display:flex;gap:3px}
+.blk i{flex:1;height:14px;border:2px solid var(--ink);background:#fff}
+.blk i.on{background:var(--ink)}
+.bd{width:2em;height:2em;line-height:1.7em;text-align:center;border:2px solid var(--ink);border-radius:50%;font-weight:700}
+.bd.y{background:var(--ink);color:#fff}
+.acts{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px}
+.all{margin-top:24px}
+.all h3{font-size:16px;margin:0 0 10px}
+.grid{display:grid;grid-template-columns:repeat(5,1fr);gap:6px}
+.cell{border:2px solid var(--ink);border-radius:10px;background:#fff;padding:4px 2px;text-align:center;font-size:11px;line-height:1.3}
+.cell.me{background:var(--ink);color:#fff;box-shadow:3px 3px 0 #888}
+.cell svg{width:100%;height:auto;display:block}
+.note{font-size:12px;margin-top:14px;text-align:center}
+.cc{display:grid;grid-template-columns:96px 1fr;gap:14px;align-items:start;padding:16px;margin-top:16px}
+.cp{border:3px solid var(--ink);border-radius:12px;padding:4px;background:#fff}
+.cp svg{width:100%;height:auto;display:block}
+.cc h3{font-size:18px;margin:0 0 4px}
+.cc p{margin:0 0 6px;font-size:14px}
+.cc .cw{font-size:12px;border-radius:8px;padding:2px 8px;display:inline-block;background:var(--ink);color:#fff}
+.cc .ca{border-top:2px dashed var(--ink);padding-top:6px}
+[hidden]{display:none!important}
+@media (prefers-reduced-motion:reduce){.btn,.prog i{transition:none}}
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs><pattern id="dots" width="5" height="5" patternUnits="userSpaceOnUse"><circle cx="2.5" cy="2.5" r="1.1" fill="#111" stroke="none"/></pattern></defs></svg>
+<div class="wrap">
+<section id="s0" class="card">
+<div class="cast" id="cast" aria-hidden="true"></div>
+<h1 class="disp">理科計算<br>どうぶつタイプ診断</h1>
+<p class="sub-t">計算のクセを5つの力でチェック。あなたは10匹のどのタイプ？<br>全9問・約2分・正解はありません。ふだんの自分に近いものを選んでね。</p>
+<button class="btn main" id="go">診断スタート</button>
+<button class="btn" id="list" style="margin-top:14px;text-align:center">キャラクター一覧を見る</button>
+</section>
+<section id="s1" class="card" hidden>
+<div class="prog"><i id="bar"></i></div>
+<div class="cnt" id="cnt"></div>
+<span class="tag" id="tag"></span>
+<p class="q" id="q"></p>
+<div class="opts" id="opts"></div>
+<button class="btn sub" id="back">もどる</button>
+</section>
+<section id="s2" hidden>
+<div class="card">
+<div class="res-top"><p class="lead">あなたの理科計算タイプは…</p><div class="pic" id="pic"></div><h2 class="disp" id="rn"></h2></div>
+<p class="desc" id="rd"></p>
+<div class="abil" id="abil"></div>
+<div class="adv" id="adv"></div>
+<div class="acts"><button class="btn sub" id="again">もう一度診断する</button><button class="btn sub" id="copy">結果をコピー</button><button class="btn sub" id="rl">キャラクター一覧</button></div>
+</div>
+<div class="all"><h3 class="disp">ぜんぶで10タイプ</h3><div class="grid" id="grid"></div></div>
+</section>
+<section id="s3" hidden>
+<div class="card"><h2 class="disp">キャラクター一覧</h2><p class="sub-t" style="margin:8px 0 14px">全10タイプ。診断では、5つの力の○×の組み合わせで決まります。</p><div class="acts" style="margin:0"><button class="btn sub" id="lhome">ホームにもどる</button><button class="btn sub" id="lgo">診断する</button></div></div>
+<div id="chars"></div>
+</section>
+<p class="note">これは学習のヒントを見つけるための簡易診断です。</p>
+</div>
+<script>
+var AB=['情報整理','立式','式変形','正確な計算','有効数字・単位'];
+var Q=[[0,'問題文を読んで、どのような表にまとめるかを判断することができる。'],[1,'表から、正しく式を立てることができる。'],[2,'「求めたい値（xなど）＝」の形にするために、ミスなく移項することができる。'],[3,'筆算を、間違えずにすることができる。'],[4,'求められている値になるように、四捨五入するのを忘れない。'],[0,'問題文から、情報を適切に表などにまとめることができる。'],[2,'「求めたい値（xなど）＝」の形にするために、xの係数などをミスなく消すことができる。'],[3,'約分を、間違えずにすることができる。'],[4,'答えに単位をつけるのを忘れない。']];
+var C=[['とてもあてはまる',3],['ややあてはまる',2],['あまりあてはまらない',1],['まったくあてはまらない',0]];
+var T={
+owl:{n:'博識なフクロウ',s:'フクロウ',d:'読む・立てる・変形する・計算する・仕上げる。5つの力がそろった、理科計算の達人タイプです。',a:'友だちに説明すると、理解がさらに深まります。発展問題にも挑戦してみよう。',g:'<polygon points="26,46 30,22 44,38" fill="#111"/><polygon points="78,46 74,22 60,38" fill="#111"/><ellipse cx="52" cy="76" rx="28" ry="36"/><ellipse cx="52" cy="98" rx="16" ry="16" fill="url(#dots)"/><path d="M24 80 Q16 98 28 112" fill="none"/><path d="M80 80 Q88 98 76 112" fill="none"/><circle cx="40" cy="62" r="11"/><circle cx="64" cy="62" r="11"/><circle cx="40" cy="62" r="4" fill="#111"/><circle cx="64" cy="62" r="4" fill="#111"/><polygon points="47,72 57,72 52,82" fill="#111"/><path d="M42 112 v8 M62 112 v8" fill="none"/><path d="M90 28 v10 M85 33 h10 M14 28 v8 M10 32 h8" fill="none"/>'},
+monkey:{n:'おっちょこちょいな猿',s:'サル',d:'考え方も式変形もバッチリ。なのに、約分や繰り上がりでうっかり転んでしまうタイプです。',a:'答えが出たら検算を1回。概算で桁をチェックするだけでも、ミスはぐっと減ります。',g:'<path d="M70 116 Q96 112 90 92 Q88 86 94 82" fill="none"/><ellipse cx="52" cy="110" rx="18" ry="16"/><circle cx="22" cy="62" r="9"/><circle cx="82" cy="62" r="9"/><circle cx="52" cy="62" r="26" fill="url(#dots)"/><ellipse cx="52" cy="68" rx="18" ry="16"/><circle cx="44" cy="62" r="2.5" fill="#111"/><circle cx="60" cy="62" r="2.5" fill="#111"/><path d="M40 57 L48 53 M64 53 L72 57" fill="none"/><path d="M44 76 Q48 72 52 76 Q56 80 60 76" fill="none"/><path d="M86 22 Q92 32 86 36 Q80 32 86 22Z"/><path d="M10 20 l10 10 m0 -10 l-10 10" fill="none"/><path d="M12 130 L38 134" fill="none" stroke-width="4"/>'},
+tanuki:{n:'詰めの甘いタヌキ',s:'タヌキ',d:'計算そのものは合っているのに、単位や有効数字で減点されがち。あと一歩で満点のタイプです。',a:'答えを書く前に「単位は？ 何桁？」と声に出して確認する、をルーティンにしよう。',g:'<circle cx="28" cy="40" r="9" fill="#111"/><circle cx="76" cy="40" r="9" fill="#111"/><ellipse cx="52" cy="112" rx="22" ry="18"/><ellipse cx="52" cy="114" rx="12" ry="10" fill="url(#dots)"/><ellipse cx="52" cy="64" rx="30" ry="24"/><ellipse cx="39" cy="62" rx="9" ry="7" fill="#111" transform="rotate(-20 39 62)"/><ellipse cx="65" cy="62" rx="9" ry="7" fill="#111" transform="rotate(20 65 62)"/><circle cx="40" cy="62" r="2" fill="#fff" stroke="none"/><circle cx="64" cy="62" r="2" fill="#fff" stroke="none"/><circle cx="52" cy="72" r="4" fill="#111"/><path d="M46 80 Q52 85 58 80" fill="none"/><path d="M88 12 Q98 10 98 20 Q98 28 91 30 L91 34" fill="none"/><circle cx="91" cy="41" r="2" fill="#111"/>'},
+pigeon:{n:'迷子のハト',s:'ハト',d:'情報を整理して式を立てるところまでは順調。式変形の途中で、道に迷ってしまうタイプです。',a:'1行ごとに「両辺に同じ操作」と書き添えながら、式変形を一歩ずつ進めてみよう。',g:'<polygon points="8,104 30,86 30,106"/><ellipse cx="50" cy="92" rx="26" ry="20"/><path d="M34 90 Q48 78 66 92 Q50 104 34 90Z" fill="url(#dots)"/><circle cx="68" cy="58" r="14"/><polygon points="80,54 92,60 80,64" fill="#111"/><circle cx="70" cy="56" r="5"/><circle cx="70" cy="56" r="1.8" fill="#111"/><path d="M44 110 v14 M56 110 v14 M40 124 h8 M52 124 h8" fill="none"/><path d="M10 34 Q24 14 36 32 Q48 48 28 46 Q16 42 30 28 Q52 10 70 26 Q84 38 94 24" fill="none" stroke-width="2"/>'},
+squirrel:{n:'情報あつめのリス',s:'リス',d:'条件をきれいに集めて整理するのが得意。それを式にするところで、手が止まりやすいタイプです。',a:'整理した量を、公式の文字へ1つずつ当てはめる練習を。単位から公式を探すのも効果的です。',g:'<ellipse cx="78" cy="76" rx="14" ry="30" fill="url(#dots)" transform="rotate(20 78 76)"/><ellipse cx="46" cy="86" rx="18" ry="22"/><circle cx="46" cy="50" r="17"/><polygon points="34,40 34,24 45,35"/><polygon points="47,35 58,24 58,40"/><circle cx="40" cy="49" r="2.5" fill="#111"/><circle cx="52" cy="49" r="2.5" fill="#111"/><circle cx="46" cy="56" r="2.5" fill="#111"/><circle cx="38" cy="78" r="3.5"/><circle cx="54" cy="78" r="3.5"/><circle cx="22" cy="122" r="5"/><circle cx="38" cy="122" r="5"/><circle cx="54" cy="122" r="5"/><circle cx="70" cy="122" r="5"/><path d="M16 120 Q22 113 28 120Z M32 120 Q38 113 44 120Z M48 120 Q54 113 60 120Z M64 120 Q70 113 76 120Z" fill="#111"/>'},
+rabbit:{n:'早とちりなウサギ',s:'ウサギ',d:'式を立てるスピードはピカイチ。ただ、問題文を読み落として、別の式を立ててしまいがちです。',a:'式を書く前に、「求めるもの」と「与えられた量」を線で囲む。ひと呼吸おくのがコツです。',g:'<circle cx="76" cy="118" r="6" fill="url(#dots)"/><ellipse cx="52" cy="110" rx="20" ry="15"/><ellipse cx="38" cy="30" rx="8" ry="22" transform="rotate(-15 38 30)"/><ellipse cx="38" cy="30" rx="3.5" ry="15" fill="url(#dots)" stroke="none" transform="rotate(-15 38 30)"/><ellipse cx="66" cy="30" rx="8" ry="22" transform="rotate(15 66 30)"/><ellipse cx="66" cy="30" rx="3.5" ry="15" fill="url(#dots)" stroke="none" transform="rotate(15 66 30)"/><circle cx="52" cy="66" r="20"/><circle cx="45" cy="64" r="2.8" fill="#111"/><circle cx="59" cy="64" r="2.8" fill="#111"/><circle cx="52" cy="72" r="2" fill="#111"/><path d="M52 74 v3 M47 79 Q52 82 57 79" fill="none"/><path d="M4 74 h16 M8 88 h14 M4 102 h16" fill="none"/><path d="M74 102 L92 86" fill="none" stroke-width="4"/>'},
+ant:{n:'きちょうめんなアリ',s:'アリ',d:'計算も単位の処理もコツコツ丁寧。一方で、文章題の読み取りと立式には苦戦しやすいタイプです。',a:'問題文を図や表に直してから、式を立てる練習を。丁寧さが大きな武器になります。',g:'<path d="M50 74 l-10 16 M56 76 l0 18 M62 74 l10 16" fill="none"/><ellipse cx="80" cy="66" rx="14" ry="12" fill="#111"/><ellipse cx="54" cy="66" rx="11" ry="10"/><circle cx="30" cy="62" r="14"/><path d="M24 50 Q18 34 8 32 M34 49 Q38 32 28 24" fill="none"/><circle cx="8" cy="32" r="2" fill="#111"/><circle cx="28" cy="24" r="2" fill="#111"/><circle cx="26" cy="60" r="3" fill="#111"/><path d="M24 68 Q30 72 36 68" fill="none"/><circle cx="40" cy="112" r="12"/><path d="M49 121 L64 134" fill="none" stroke-width="5"/>'},
+beaver:{n:'式変形ビーバー',s:'ビーバー',d:'式さえ手元にあれば、変形はお手のもの。文章から式を立てるところが伸びしろです。',a:'公式を暗記するだけでなく、量の関係（比例や割合）を言葉で説明してみよう。',g:'<ellipse cx="86" cy="118" rx="14" ry="7" fill="url(#dots)" transform="rotate(-20 86 118)"/><ellipse cx="52" cy="108" rx="22" ry="18"/><circle cx="52" cy="62" r="22"/><circle cx="34" cy="44" r="6" fill="#111"/><circle cx="70" cy="44" r="6" fill="#111"/><circle cx="44" cy="58" r="2.5" fill="#111"/><circle cx="60" cy="58" r="2.5" fill="#111"/><ellipse cx="52" cy="68" rx="5" ry="3.5" fill="#111"/><rect x="47" y="74" width="10" height="10" rx="1"/><path d="M52 74 v10" fill="none" stroke-width="1.5"/><rect x="62" y="8" width="16" height="16" transform="rotate(15 70 16)"/><rect x="10" y="120" width="16" height="16" fill="url(#dots)"/>'},
+chick:{n:'のびしろヒヨコ',s:'ヒヨコ',d:'いまはまだ殻から出たばかり。どれか1つの力が育つと、全体が一気に伸びるタイプです。',a:'苦手な力を1つだけ選んで、毎日1問ずつ練習してみよう。成長を実感しやすい時期です。',g:'<ellipse cx="24" cy="70" rx="7" ry="10" fill="url(#dots)"/><ellipse cx="80" cy="70" rx="7" ry="10" fill="url(#dots)"/><circle cx="52" cy="66" r="26"/><path d="M48 40 Q46 30 42 28 M52 40 V26 M56 40 Q58 30 62 28" fill="none"/><circle cx="42" cy="62" r="3" fill="#111"/><circle cx="62" cy="62" r="3" fill="#111"/><polygon points="46,68 58,68 52,76" fill="#111"/><circle cx="35" cy="72" r="4" fill="url(#dots)"/><circle cx="69" cy="72" r="4" fill="url(#dots)"/><path d="M16 98 L26 88 L36 100 L46 88 L56 100 L66 88 L76 100 L86 90 L90 98 L90 122 Q52 142 14 122 Z"/><path d="M92 20 v10 M87 25 h10 M10 26 v8 M6 30 h8" fill="none"/>'},
+sloth:{n:'のんびりナマケモノ',s:'ナマケモノ',d:'焦らずマイペースなタイプ。まずは基本から、ゆっくり着実にいきましょう。',a:'最初の一歩は、問題文の数値と求める量を書き出すこと。それだけで、ぐっと解きやすくなります。',g:'<path d="M6 22 H98" fill="none" stroke-width="5"/><path d="M14 22 Q8 10 22 12 Q22 20 14 22Z" fill="url(#dots)"/><path d="M32 82 Q24 56 26 28 M72 82 Q80 56 78 28" fill="none" stroke-width="5"/><ellipse cx="52" cy="98" rx="22" ry="28" fill="url(#dots)"/><circle cx="52" cy="66" r="19"/><ellipse cx="44" cy="64" rx="7" ry="4" fill="#111" transform="rotate(20 44 64)"/><ellipse cx="60" cy="64" rx="7" ry="4" fill="#111" transform="rotate(-20 60 64)"/><path d="M41 65 Q44 67 47 65 M57 65 Q60 67 63 65" fill="none" stroke="#fff" stroke-width="1.5"/><ellipse cx="52" cy="72" rx="3" ry="2" fill="#111"/><path d="M46 77 Q52 81 58 77" fill="none"/><path d="M84 58 h8 l-8 9 h8 M90 42 h6 l-6 7 h6" fill="none"/>'}
+};
+function sv(k){return '<svg viewBox="0 0 104 140" role="img" aria-label="'+T[k].s+'"><g stroke="#111" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round" fill="#fff">'+T[k].g+'</g></svg>'}
+function kind(a,b,c,d,e){
+if(a&&b&&c&&d&&e)return'owl';
+if(!a&&!b&&!c&&!d&&!e)return'sloth';
+if(a&&b&&c&&!d)return'monkey';
+if(a&&b&&c&&d&&!e)return'tanuki';
+if(a&&b&&!c)return'pigeon';
+if(a&&!b)return'squirrel';
+if(!a&&b)return'rabbit';
+if(d&&e)return'ant';
+if(c)return'beaver';
+return'chick'}
+var $=function(i){return document.getElementById(i)};
+var ans=[],cur=0;
+function show(n){['s0','s1','s2','s3'].forEach(function(id,i){$(id).hidden=i!==n});window.scrollTo(0,0)}
+function ask(){
+var q=Q[cur];
+$('bar').style.width=(cur/Q.length*100)+'%';
+$('cnt').textContent=(cur+1)+' / '+Q.length;
+$('tag').textContent=AB[q[0]];
+$('q').textContent=q[1];
+$('back').hidden=cur===0;
+var o=$('opts');o.innerHTML='';
+C.forEach(function(c){var b=document.createElement('button');b.className='btn';b.textContent=c[0];b.onclick=function(){ans[cur]=c[1];cur++;cur<Q.length?ask():finish()};o.appendChild(b)})}
+function finish(){
+var sc=[0,0,0,0,0],mx=[0,0,0,0,0];
+Q.forEach(function(q,i){sc[q[0]]+=ans[i];mx[q[0]]+=3});
+var ok=sc.map(function(s,i){return s*3>=mx[i]*2});
+var k=kind(ok[0],ok[1],ok[2],ok[3],ok[4]),t=T[k];
+$('pic').innerHTML=sv(k);
+$('rn').textContent=t.n;
+$('rd').textContent=t.d;
+$('adv').textContent='ワンポイント：'+t.a;
+$('abil').innerHTML=sc.map(function(s,i){
+var bl='',f=Math.round(s/mx[i]*6);for(var j=0;j<6;j++)bl+='<i'+(j<f?' class="on"':'')+'></i>';
+return '<div class="row"><span>'+AB[i]+'</span><span class="blk" aria-label="'+s+'/'+mx[i]+'">'+bl+'</span><span class="bd'+(ok[i]?' y':'')+'" aria-label="'+(ok[i]?'得意':'伸びしろ')+'">'+(ok[i]?'○':'×')+'</span></div>'}).join('');
+$('grid').innerHTML=Object.keys(T).map(function(x){return '<div class="cell'+(x===k?' me':'')+'">'+sv(x)+T[x].s+'</div>'}).join('');
+$('copy').textContent='結果をコピー';
+$('copy').onclick=function(){
+var tx='理科計算どうぶつタイプ診断：私は「'+t.n+'」でした！';
+try{navigator.clipboard.writeText(tx).then(function(){$('copy').textContent='コピーしました'},function(){$('copy').textContent=tx})}catch(e){$('copy').textContent=tx}};
+show(2)}
+$('cast').innerHTML=['owl','monkey','tanuki','rabbit','sloth'].map(sv).join('');
+$('go').onclick=function(){ans=[];cur=0;show(1);ask()};
+$('back').onclick=function(){if(cur>0){cur--;ask()}};
+$('again').onclick=function(){show(0)};
+var W={owl:'5つの力がすべて○',monkey:'情報整理・立式・式変形が○、正確な計算が×',tanuki:'正確な計算まで○、有効数字・単位が×',pigeon:'情報整理・立式が○、式変形が×',squirrel:'情報整理が○、立式が×',rabbit:'情報整理が×、立式が○',ant:'情報整理・立式が×、正確な計算と有効数字・単位が○',beaver:'情報整理・立式が×、式変形が○',chick:'上のどれにも当てはまらないタイプ',sloth:'5つの力がすべて×'};
+$('chars').innerHTML=Object.keys(T).map(function(x){var t=T[x];return '<article class="card cc"><div class="cp">'+sv(x)+'</div><div><h3 class="disp">'+t.n+'</h3><p class="cw">'+W[x]+'</p><p>'+t.d+'</p><p class="ca">ワンポイント：'+t.a+'</p></div></article>'}).join('');
+$('list').onclick=function(){show(3)};
+$('rl').onclick=function(){show(3)};
+$('lhome').onclick=function(){show(0)};
+$('lgo').onclick=function(){$('go').onclick()};
+</script>
+</body>
+</html>
